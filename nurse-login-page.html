@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNIZULU-Nurse Login</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+      z-index: 1;
+      background: none;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.regentlight.co.za/wp-content/uploads/UniZulu-Library-6-600x400.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(4px) brightness(0.6);
+      z-index: -2;
+    }
+
+    header {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      background-color: rgba(50, 9, 161, 0.671);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 3.6rem;
+      color: #f0f5fa;
+      padding: 40px 20px;
+      letter-spacing: 2.5px;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+      user-select: none;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      animation: fadeSlideUp 1s ease-out forwards;
+      z-index: 2;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .header-title {
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .header-logo {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 100px;
+      width: auto;
+    }
+
+    .menu-toggle {
+  margin-left: auto;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 20;
+  position: absolute;
+  right: 20px;
+}
+
+ .dropdown button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(45deg, #ff0101b7, #ff00008a);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgb(196, 81, 81);
+      transition: 0.3s ease;
+    }
+
+
+.dropdown button:hover {
+  background: linear-gradient(45deg, #ff0000, #ff0000);
+  transform: scale(1.05);
+}
+
+
+    .subheader {
+      margin: 10px auto 0 auto;
+      padding: 10px 20px;
+      font-size: 1.4rem;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      color: #ffffffcc;
+      background-color: rgba(50, 9, 161, 0.671);
+      border-radius: 15px;
+      letter-spacing: 1.5px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeSlideUp 1s ease-out forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
+    }
+
+    @keyframes fadeSlideUp {
+      0% {opacity: 0; transform: translateY(40px);}
+      100% {opacity: 1; transform: translateY(0);}
+    }
+
+    .login-container {
+      position: relative;
+      max-width: 400px;
+      width: 90%;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 50px 40px;
+      border-radius: 25px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      margin-top: 60px;
+      text-align: center;
+      transition: 0.4s ease all;
+    }
+
+    .login-container:hover {
+      box-shadow: 8px 8px 20px rgba(250, 113, 255, 0.4),
+                  -8px -8px 20px rgba(242, 101, 255, 0.45);
+    }
+
+    .login-container img {
+      width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .greeting-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      color:  rgba(50, 9, 161, 0.671);
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    input::placeholder {
+      color: transparent;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 18px 20px;
+      border-radius: 15px;
+      border: none;
+      background: #e6ecf3;
+      font-size: 1.1rem;
+      color: #333;
+      outline: none;
+    }
+
+    label {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: #777;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+
+    input:focus + label,
+    input:not(:placeholder-shown) + label {
+      top: 5px;
+      left: 18px;
+      font-size: 0.8rem;
+      color:  rgba(50, 9, 161, 0.671);
+      background: #f0f5fa;
+      padding: 0 6px;
+      font-weight: 600;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 16px 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(45deg, rgba(50, 9, 161, 0.671), #9069fa);
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px  #bda5fffd;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #753881, #ca7bf8);
+    }
+
+    .register-toggle {
+      margin-top: 30px;
+      font-size: 0.95rem;
+      color: #fff;
+      background: transparent;
+    }
+
+    .register-toggle span {
+      font-weight: bold;
+      color: #ffeb3b;
+      cursor: pointer;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+      animation: fadeSlideUp 0.5s ease-out;
+    }
+
+    #password-requirements input[type="checkbox"] {
+      pointer-events: none;
+      margin-right: 8px;
+      transform: scale(1.2);
+      vertical-align: middle;
+    }
+
+    #password-requirements {
+      display: none;
+      margin-top: -15px;
+      margin-bottom: 25px;
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    #message-box {
+      display: none;
+      padding: 10px;
+      margin-top: 10px;
+      text-align: center;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 420px) {
+      header {
+        font-size: 2.8rem;
+        padding: 30px 15px;
+      }
+
+      .subheader {
+        font-size: 1rem;
+        padding: 8px 15px;
+      }
+
+      .login-container {
+        padding: 30px 20px;
+        margin-top: 40px;
+      }
+    }
+
+    #send-otp-btn,
+#verify-otp-btn {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #86259e, #9237b6);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(227, 80, 190, 0.4);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#send-otp-btn:hover,
+#verify-otp-btn:hover {
+  background: linear-gradient(45deg, #e24ab4, #e35088);
+}
+ 
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://www.pngall.com/wp-content/uploads/10/Plus-Symbol-PNG-Cutout.png" alt="UNIZULU Logo" class="header-logo">
+    <div class="header-title">UNIZULU DIGITAL HEALTH PORTAL</div>
+    <!-- Dropdown Menu Toggle -->
+    <button class="menu-toggle" id="menuToggle">
+      <i class="fas fa-bars" id="menuIcon"></i>
+    </button>
+
+    <!-- Dropdown -->
+    <div class="dropdown" id="dropdownMenu">
+      <button onclick="location.href='admin-login-page.html'">Admin</button>
+    </div>
+  </header>
+
+  <div class="subheader">NURSE LOGIN</div>
+
+  <div class="login-container">
+    <img src="https://graduations.unizulu.ac.za/wp-content/uploads/2021/06/UNIZULU-crest-white.png" alt="UNIZULU Crest" />
+    
+    <div id="message-box"></div>
+
+    <!-- LOGIN FORM -->
+    <div class="form-section active" id="login-section">
+      <div class="greeting-text">Hello! Please log in below</div>
+      <form id="login-form">
+        <div class="input-group">
+          <input type="text" id="username" placeholder=" " required />
+          <label for="username">Staff Number</label>
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder=" " required />
+          <label for="password">Password</label>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <div class="register-toggle">You don't have access yet? Please <span onclick="toggleForm()">REGISTER</span> below.</div>
+    </div>
+
+    <!-- REGISTRATION FORM -->
+    <div class="form-section" id="register-section">
+      <div class="greeting-text">Register New Nurse Account</div>
+      <form id="register-form">
+        <div class="input-group">
+          <input type="text" id="staff-number" placeholder=" " required />
+          <label for="staff-number">Staff Number</label>
+        </div>
+        <div class="input-group">
+          <input type="text" id="id-number" placeholder=" " required />
+          <label for="id-number">ID Number</label>
+        </div>
+        <div class="input-group">
+          <input type="text" id="full-name" placeholder=" " required />
+          <label for="full-name">Name & Surname</label>
+        </div>
+        <div class="input-group" style="position: relative;">
+          <input type="email" id="email" placeholder=" " required />
+          <label for="email">Outlook Email</label>
+          <button type="button" id="send-otp-btn" style="position: absolute; top: 10px; right: 10px;">Send OTP</button>
+        </div>
+        <div class="input-group" id="otp-group" style="display: none; position: relative;">
+          <input type="text" id="otp-input" placeholder=" " maxlength="6" />
+          <label for="otp-input">Enter OTP</label>
+          <button type="button" id="verify-otp-btn" style="position: absolute; top: 8px; right: 10px;">Verify OTP</button>
+        </div>
+        <div class="input-group">
+          <input type="password" id="reg-password" placeholder=" " disabled />
+          <label for="reg-password">Create Password</label>
+        </div>
+        <div id="password-requirements">
+          <p>Password must contain:</p>
+          <ul style="list-style: none; padding-left: 0;">
+            <li><input type="checkbox" id="req-length" disabled> At least 8 characters</li>
+            <li><input type="checkbox" id="req-digit" disabled> At least one digit</li>
+            <li><input type="checkbox" id="req-uppercase" disabled> At least one uppercase letter</li>
+            <li><input type="checkbox" id="req-not-name" disabled> Must not contain your name</li>
+          </ul>
+        </div>
+        <div class="input-group">
+          <input type="password" id="confirm-password" placeholder=" " disabled />
+          <label for="confirm-password">Confirm Password</label>
+        </div>
+        <button type="submit" id="register-btn" disabled>Register</button>
+      </form>
+      <div class="register-toggle">Already registered? <span onclick="toggleForm()">Login here</span>.</div>
+    </div>
+  </div>
+
+  <script>
+    // Your existing JavaScript code here (same as admin page),
+    // Just update the login redirect to nurse-home-page.html and login credentials accordingly:
+
+    const loginSection = document.getElementById("login-section");
+    const registerSection = document.getElementById("register-section");
+
+    function toggleForm() {
+      loginSection.classList.toggle("active");
+      registerSection.classList.toggle("active");
+    }
+
+    function showMessage(msg, color = "green") {
+      const box = document.getElementById("message-box");
+      box.style.display = "block";
+      box.style.backgroundColor = color === "green" ? "#d4edda" : "#f8d7da";
+      box.style.color = color === "green" ? "#155724" : "#721c24";
+      box.innerText = msg;
+      setTimeout(() => box.style.display = "none", 4000);
+    }
+
+    document.getElementById("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+
+      // hard-coded database
+      if (username === "01201" && password === "YXGjcJg01") {
+        window.location.href = "nurse-home-page.html";
+      } else {
+        showMessage("Invalid username or password", "red");
+      }
+    });
+
+    function validatePassword(password, name) {
+      return password.length >= 8 &&
+        /\d/.test(password) &&
+        /[A-Z]/.test(password) &&
+        !password.toLowerCase().includes(name.toLowerCase());
+    }
+
+    function isValidSAID(id) {
+      if (!/^\d{13}$/.test(id)) return false;
+
+      const yy = parseInt(id.substring(0, 2), 10);
+      const mm = parseInt(id.substring(2, 4), 10);
+      const dd = parseInt(id.substring(4, 6), 10);
+      const fullYear = yy >= 0 && yy <= 25 ? 2000 + yy : 1900 + yy;
+
+      const birthDate = new Date(fullYear, mm - 1, dd);
+      if (
+        birthDate.getFullYear() !== fullYear ||
+        birthDate.getMonth() !== mm - 1 ||
+        birthDate.getDate() !== dd
+      ) {
+        return false;
+      }
+
+      let sum = 0;
+      for (let i = 0; i < 13; i++) {
+        let digit = parseInt(id[i]);
+        if ((i + 1) % 2 === 0) {
+          digit *= 2;
+          if (digit > 9) digit -= 9;
+        }
+        sum += digit;
+      }
+      return sum % 10 === 0;
+    }
+
+    const sendOtpBtn = document.getElementById("send-otp-btn");
+    const otpGroup = document.getElementById("otp-group");
+    const otpInput = document.getElementById("otp-input");
+    const regPassword = document.getElementById("reg-password");
+    const confirmPasswordInput = document.getElementById("confirm-password");
+    const registerBtn = document.getElementById("register-btn");
+
+    let generatedOtp = null;
+
+    sendOtpBtn.addEventListener("click", () => {
+      const email = document.getElementById("email").value.trim();
+      if (!validateEmail(email)) {
+        showMessage("Please enter a valid email before sending OTP.", "red");
+        return;
+      }
+      generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      showMessage(`OTP sent to ${email}: ${generatedOtp}`, "green");
+      otpGroup.style.display = "block";
+      sendOtpBtn.disabled = true;
+      document.getElementById("email").disabled = true;
+      otpInput.focus();
+    });
+
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email.toLowerCase());
+    }
+
+    document.getElementById("verify-otp-btn").addEventListener("click", () => {
+      const enteredOtp = otpInput.value.trim();
+      if (enteredOtp === "") {
+        showMessage("Please enter the OTP sent to your email.", "red");
+        return;
+      }
+      if (enteredOtp === generatedOtp) {
+        showMessage("Email verified! You can now create a password and register.", "green");
+        regPassword.disabled = false;
+        confirmPasswordInput.disabled = false;
+        registerBtn.disabled = false;
+        otpInput.disabled = true;
+        document.getElementById("verify-otp-btn").disabled = true;
+      } else {
+        showMessage("Invalid OTP. Please try again.", "red");
+      }
+    });
+
+    document.getElementById("register-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const idNumber = document.getElementById("id-number").value.trim();
+      if (!isValidSAID(idNumber)) {
+        showMessage("Please enter a valid South African ID number.", "red");
+        return;
+      }
+
+      if (otpInput.value !== generatedOtp) {
+        showMessage("Please verify your email by entering the correct OTP.", "red");
+        return;
+      }
+
+      const name = document.getElementById("full-name").value.trim();
+      const password = regPassword.value.trim();
+      const confirmPassword = confirmPasswordInput.value.trim();
+
+      if (!validatePassword(password, name)) {
+        showMessage("Password is invalid or insecure.", "red");
+        return;
+      }
+      if (password !== confirmPassword) {
+        showMessage("Passwords do not match.", "red");
+        return;
+      }
+
+      showMessage("Registration successful! You can now login.", "green");
+      document.getElementById("register-form").reset();
+      toggleForm();
+    });
+
+    const passwordInput = document.getElementById("reg-password");
+    const nameInput = document.getElementById("full-name");
+
+    passwordInput.addEventListener("input", () => {
+      const password = passwordInput.value;
+      const name = nameInput.value.trim();
+      document.getElementById("req-length").checked = password.length >= 8;
+      document.getElementById("req-digit").checked = /\d/.test(password);
+      document.getElementById("req-uppercase").checked = /[A-Z]/.test(password);
+      document.getElementById("req-not-name").checked = name === "" ? false : !password.toLowerCase().includes(name.toLowerCase());
+    });
+
+    passwordInput.addEventListener("focus", () => {
+      document.getElementById("password-requirements").style.display = "block";
+    });
+
+    passwordInput.addEventListener("blur", () => {
+      setTimeout(() => {
+        document.getElementById("password-requirements").style.display = "none";
+      }, 200);
+    });
+
+    document.getElementById("id-number").addEventListener("blur", () => {
+      const id = document.getElementById("id-number").value.trim();
+      if (id && !isValidSAID(id)) {
+        showMessage("Invalid South African ID number format.", "red");
+      }
+    });
+
+    // Dropdown toggle logic
+    const menuToggle = document.getElementById("menuToggle");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
+    menuToggle.addEventListener("click", () => {
+      dropdownMenu.style.display = dropdownMenu.style.display === "flex" ? "none" : "flex";
+    });
+
+    
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Appointments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+     .back-button {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #c0392b;
+}
+
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('https://www.regentlight.co.za/wp-content/uploads/UniZulu-Library-6-600x400.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(4px);
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4); /* adjust 0.4 → 0.6 for even darker */
+  z-index: -1;
+}
+
+
+    
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+
+ nav {
+      background-color: rgba(50, 9, 161, 0.801);
+      height: 140px;
+      width: auto;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: relative;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+     .nav-header {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Poppins', sans-serif;
+      font-size: 3.6rem;
+      font-weight: 600;
+      color: #f0f5fa;
+      white-space: nowrap;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+      animation: slideFadeIn 1s ease-out;
+    }
+
+    .header-logo {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 100px;
+      width: auto;
+      z-index: 10;
+    }
+
+    @keyframes slideFadeIn {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 100px auto 120px;
+      padding: 20px;
+      background: rgb(50, 9, 161);
+      border-radius: 20px;
+
+      color: white;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .search-box input {
+      padding: 10px;
+      width: 300px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+   
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+th {
+  background: rgb(38, 8, 119);
+  color: white;
+}
+/* Hide the default checkbox */
+.complete-checkbox {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+/* Background color when checked */
+.complete-checkbox:checked {
+  background-color: #2ecc71; /* green */
+  border-color: #27ae60;
+}
+
+
+
+
+footer {
+      background-color: rgba(50, 9, 161, 0.801);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    }
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="https://www.pngall.com/wp-content/uploads/10/Plus-Symbol-PNG-Cutout.png" alt="Logo" class="header-logo" />
+    <div class="nav-header">APPROVED APPOINTMENTS</div>
+    <button class="back-button" onclick="history.back()">Back to home</button>
+</nav>
+
+<div class="container">
+  <h2>Approved Appointments</h2>
+  <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search appointments..." onkeyup="searchAppointments()">
+    </div>
+  <table id="nurseAppointmentsTable">
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Completed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Filled with JavaScript -->
+    </tbody>
+  </table>
+</div>
+
+<footer>
+    <div><i class="fas fa-map-marker-alt"></i> 1 Main Road Vulindlela, Kwadlangezwa, Empangeni, South Africa</div>
+    <div><i class="fas fa-phone-alt"></i> 035 902 6000</div>
+  </footer>
+<script>
+
+function searchAppointments() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const table = document.getElementById("nurseAppointmentsTable");
+  const rows = table.getElementsByTagName("tr");
+
+  // Loop through table rows (skip the header row)
+  for (let i = 1; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    let rowMatches = false;
+
+    // Check if any cell contains the search text
+    for (let j = 0; j < cells.length; j++) {
+      if (cells[j].textContent.toLowerCase().includes(input)) {
+        rowMatches = true;
+        break;
+      }
+    }
+
+    // Show or hide the row
+    rows[i].style.display = rowMatches ? "" : "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const tableBody = document.querySelector("#nurseAppointmentsTable tbody");
+  const approvedList = JSON.parse(localStorage.getItem("approvedAppointments")) || [];
+
+ // Sort approvedList by date (earliest first)
+  approvedList.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  approvedList.forEach((appt, index) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${appt.patient}</td>
+      <td>${appt.type}</td>
+      <td>${appt.date}</td>
+      <td>${appt.time}</td>
+      <td><input type="checkbox" class="complete-checkbox" data-index="${index}"></td>
+    `;
+
+    tableBody.appendChild(row);
+    
+  });
+  
+});
+</script>
+
+</body>
+</html>

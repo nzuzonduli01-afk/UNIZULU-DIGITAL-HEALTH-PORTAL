@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNIZULU-Admin Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      width: 100%;
+      font-family: 'Roboto', sans-serif;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+body::before {
+  background: url('https://www.unizulu.ac.za/wp-content/uploads/2021/10/DSC_6316.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(4px);
+}
+
+body::after {
+  background-color: rgba(0, 0, 0, 0.4); /* adjust 0.4 to make it darker or lighter */
+  z-index: -1;
+}
+
+
+    
+
+    /* Navbar */
+   nav {
+  background-color: rgba(13, 59, 102, 0.85);
+  height: 140px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+/* Center the header text absolutely */
+.nav-header {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 3.6rem;
+  color: #f0f5fa;
+  letter-spacing: 2.5px;
+  user-select: none;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+  white-space: nowrap; /* prevent line breaks */
+  pointer-events: none; /* so clicks pass through */
+  z-index: 10;
+}
+
+
+
+.header-logo {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100px;
+  width: auto;
+  z-index: 10;
+}
+
+    .subheader {
+      margin: 10px auto 0 auto;
+      padding: 10px 20px;
+      font-size: 1.4rem;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      color: #ffffffcc;
+      background-color: rgba(13, 59, 102, 0.85);
+      border-radius: 15px;
+      letter-spacing: 1.5px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeSlideUp 1s ease-out forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
+    
+
+    display: inline-block; /* ✅ makes container fit text */
+    }
+
+    .subheader-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+    @keyframes fadeSlideUp {
+      0% {opacity: 0; transform: translateY(40px);}
+      100% {opacity: 1; transform: translateY(0);}
+    }
+
+/* Keep the toggle button on the right */
+.menu-toggle {
+  margin-left: auto;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 20;
+}
+
+    .dropdown {
+      position: absolute;
+      top: 140px;
+      right: 20px; /*  changed from left: 20px */
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 5;
+    }
+
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.nav-header {
+  animation: slideFadeIn 1s ease-out;
+}
+
+
+    .dropdown button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(45deg, #0d3b66, #3792b6);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(80, 227, 194, 0.5);
+      transition: 0.3s ease;
+    }
+
+    .dropdown button:hover {
+      background: linear-gradient(45deg, #4a90e2, #50e3c2);
+      transform: scale(1.05);
+    }
+
+    .dropdown button.logout {
+      background: linear-gradient(45deg, #b22222, #ff4c4c);
+      box-shadow: 0 4px 10px rgba(255, 70, 70, 0.6);
+    }
+
+    .dropdown button.logout:hover {
+      background: linear-gradient(45deg, #ff0000, #ff6666);
+    }
+
+    .center-content {
+      text-align: center;
+      margin: 80px 20px;
+    }
+
+    .center-content img {
+      width: 200px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px auto;
+      filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.25));
+    }
+
+    .center-text {
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      font-size: 3rem;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    }
+
+    footer {
+      background-color: rgba(13, 59, 102, 0.85);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+      line-height: 1.6;
+    }
+
+    footer i {
+      margin-right: 8px;
+      color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      .center-text {
+        font-size: 2rem;
+        margin-top: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <img src="https://www.pngall.com/wp-content/uploads/10/Plus-Symbol-PNG-Cutout.png" alt="UNIZULU Logo" class="header-logo">
+    <div class="nav-header">UNIZULU DIGITAL HEALTH PORTAL</div>
+
+    <button class="menu-toggle" id="menuToggle">
+    <i class="fas fa-bars" id="menuIcon"></i>
+    </button>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown" id="dropdownMenu">
+      <button onclick="location.href='appointments.html'">Appointments</button>
+      <button class="logout" onclick="location.href='admin-login-page.html'">Logout</button>
+    </div>
+  </nav>
+  <div class="subheader-wrapper">
+    <div class="subheader">CLINIC-ADMIN HOME</div>
+  </div>
+  
+
+  <!-- Center Section -->
+  <div class="center-content">
+    <img src="https://th.bing.com/th/id/R.6ba802cbfe273be5aa0ba8c042e4c3cc?rik=VvMc28scK6yMkQ&riu=http%3a%2f%2fgraduations.unizulu.ac.za%2fwp-content%2fuploads%2f2021%2f06%2fUNIZULU-crest-white.png&ehk=cwBBd%2bgdiw4Tu4hP2qfq6Lmt0FEnU59RKhd2fu%2bVRl4%3d&risl=&pid=ImgRaw&r=0" alt="UNIZULU Crest" />
+    <div class="center-text">Campus Health Clinic</div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div><i class="fas fa-map-marker-alt"></i>1 Main Road Vulindlela, Kwadlangezwa, Empangeni, South Africa · 1.4 km</div>
+    <div><i class="fas fa-phone-alt"></i>035 902 6000</div>
+  </footer>
+
+  <script>
+  const toggle = document.getElementById('menuToggle');
+  const menu = document.getElementById('dropdownMenu');
+  const icon = document.getElementById('menuIcon');
+
+  toggle.addEventListener('click', () => {
+    const isOpen = menu.style.display === 'flex';
+    menu.style.display = isOpen ? 'none' : 'flex';
+    icon.className = isOpen ? 'fas fa-bars' : 'fas fa-times'; // 🔄 change icon
+  });
+
+  window.addEventListener('click', function(e) {
+    if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+      menu.style.display = 'none';
+      icon.className = 'fas fa-bars'; // reset icon when clicked outside
+    }
+  });
+</script>
+
+</body>
+</html>

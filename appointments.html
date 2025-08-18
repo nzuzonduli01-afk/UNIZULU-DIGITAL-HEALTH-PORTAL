@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Appointment Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .back-button {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #c0392b;
+}
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      font-family: 'Roboto', sans-serif;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: url('https://www.unizulu.ac.za/wp-content/uploads/2021/10/DSC_6316.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(4px);
+      z-index: -1;
+    }
+
+    nav {
+      background-color: rgba(13, 59, 102, 0.85);
+      height: 140px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: relative;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    .nav-header {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Poppins', sans-serif;
+      font-size: 3.6rem;
+      font-weight: 600;
+      color: #f0f5fa;
+      white-space: nowrap;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+      animation: slideFadeIn 1s ease-out;
+    }
+
+    .header-logo {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 100px;
+      width: auto;
+      z-index: 10;
+    }
+
+    @keyframes slideFadeIn {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 100px auto 120px;
+      padding: 20px;
+      background: rgba(13, 59, 102, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: white;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .search-box input {
+      padding: 10px;
+      width: 300px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      text-align: left;
+    }
+
+    th {
+      background-color: rgba(255,255,255,0.1);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    td button {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .approved {
+      background-color: #2ecc71;
+    }
+
+    .declined {
+      background-color: #e74c3c;
+    }
+
+    /* NEW: Status-specific text color (only for status column) */
+    .status-pending {
+      color: #f1c40f;
+      font-weight: bold;
+    }
+
+    .status-approved {
+      color: #2ecc71;
+      font-weight: bold;
+    }
+
+    .status-declined {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: rgba(13, 59, 102, 0.85);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <img src="https://www.pngall.com/wp-content/uploads/10/Plus-Symbol-PNG-Cutout.png" alt="Logo" class="header-logo" />
+    <div class="nav-header">APPOINTMENTS</div>
+    <button class="back-button" onclick="history.back()">Back to home</button>
+  </nav>
+
+  <div class="container">
+    <h2>Booked Appointments</h2>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search appointments..." onkeyup="searchAppointments()">
+    </div>
+    <table id="appointmentsTable">
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nkosipendule Makhosonke</td>
+          <td>Student</td>
+          <td>2025-08-02</td>
+          <td>08:00</td>
+          <td id="status1"><span class="status-pending">Pending</span></td>
+          <td>
+            <button class="approved" onclick="updateStatus(1, 'Approved')">Approve</button>
+            <button class="declined" onclick="updateStatus(1, 'Declined')">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Miss T Mntengu</td>
+          <td>Staff</td>
+          <td>2025-08-03</td>
+          <td>09:00</td>
+          <td id="status2"><span class="status-pending">Pending</span></td>
+          <td>
+            <button class="approved" onclick="updateStatus(2, 'Approved')">Approve</button>
+            <button class="declined" onclick="updateStatus(2, 'Declined')">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Lungani Chiliza</td>
+          <td>Student</td>
+          <td>2025-08-04</td>
+          <td>10:30</td>
+          <td id="status3"><span class="status-pending">Pending</span></td>
+          <td>
+            <button class="approved" onclick="updateStatus(3, 'Approved')">Approve</button>
+            <button class="declined" onclick="updateStatus(3, 'Declined')">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Mr Nkomonde</td>
+          <td>Staff</td>
+          <td>2025-08-04</td>
+          <td>11:00</td>
+          <td id="status4"><span class="status-pending">Pending</span></td>
+          <td>
+            <button class="approved" onclick="updateStatus(4, 'Approved')">Approve</button>
+            <button class="declined" onclick="updateStatus(4, 'Declined')">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Miss L Hlatshwayo</td>
+          <td>Staff</td>
+          <td>2025-08-05</td>
+          <td>13:00</td>
+          <td id="status5"><span class="status-pending">Pending</span></td>
+          <td>
+            <button class="approved" onclick="updateStatus(5, 'Approved')">Approve</button>
+            <button class="declined" onclick="updateStatus(5, 'Declined')">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Nzuzo Nduli</td>
+          <td>Student</td>
+          <td>2025-08-06</td>
+          <td>14:00</td>
+          <td id="status6"><span class="status-pending">Pending</span></td>
+          <td>
+            <button class="approved" onclick="updateStatus(6, 'Approved')">Approve</button>
+            <button class="declined" onclick="updateStatus(6, 'Declined')">Decline</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <div><i class="fas fa-map-marker-alt"></i> 1 Main Road Vulindlela, Kwadlangezwa, Empangeni, South Africa</div>
+    <div><i class="fas fa-phone-alt"></i> 035 902 6000</div>
+  </footer>
+
+  <script>
+function updateStatus(rowNum, status) {
+  const statusCell = document.getElementById("status" + rowNum);
+  let className = "";
+
+  if (status === "Approved") {
+    className = "status-approved";
+    saveApprovedAppointment(rowNum);
+  } 
+  else if (status === "Declined") {
+    className = "status-declined";
+    removeApprovedAppointment(rowNum);
+  } 
+  else {
+    className = "status-pending";
+  }
+
+  statusCell.innerHTML = `<span class="${className}">${status}</span>`;
+}
+
+function saveApprovedAppointment(rowNum) {
+  const table = document.getElementById("appointmentsTable");
+  const row = table.rows[rowNum];
+  const cells = row.getElementsByTagName("td");
+
+  const appointment = {
+    patient: cells[0].textContent,
+    type: cells[1].textContent,
+    date: cells[2].textContent,
+    time: cells[3].textContent
+  };
+
+  let approvedList = JSON.parse(localStorage.getItem("approvedAppointments")) || [];
+
+  // Remove if already exists (avoid duplicates)
+  approvedList = approvedList.filter(a => 
+    !(a.patient === appointment.patient && a.date === appointment.date && a.time === appointment.time)
+  );
+
+  approvedList.push(appointment);
+  localStorage.setItem("approvedAppointments", JSON.stringify(approvedList));
+}
+
+function removeApprovedAppointment(rowNum) {
+  const table = document.getElementById("appointmentsTable");
+  const row = table.rows[rowNum];
+  const cells = row.getElementsByTagName("td");
+
+  const appointment = {
+    patient: cells[0].textContent,
+    date: cells[2].textContent,
+    time: cells[3].textContent
+  };
+
+  let approvedList = JSON.parse(localStorage.getItem("approvedAppointments")) || [];
+
+  approvedList = approvedList.filter(a => 
+    !(a.patient === appointment.patient && a.date === appointment.date && a.time === appointment.time)
+  );
+
+  localStorage.setItem("approvedAppointments", JSON.stringify(approvedList));
+}
+
+function searchAppointments() {
+  const input = document.getElementById("searchInput");
+  const filter = input.value.toLowerCase();
+  const table = document.getElementById("appointmentsTable");
+  const rows = table.getElementsByTagName("tr");
+
+  for (let i = 1; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    let match = false;
+
+    for (let j = 0; j < cells.length - 1; j++) {
+      if (cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
+        match = true;
+        break;
+      }
+    }
+
+    rows[i].style.display = match ? "" : "none";
+  }
+}
+</script>
+
+
+</body>
+</html>
